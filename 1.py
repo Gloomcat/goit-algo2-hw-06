@@ -1,8 +1,7 @@
-import requests
-
 from concurrent.futures import ThreadPoolExecutor
 from collections import defaultdict
 
+import requests
 import matplotlib.pyplot as plt
 
 
@@ -15,8 +14,10 @@ def get_text(url):
         print(e)
         return None
 
+
 def map_function(word):
     return word, 1
+
 
 def shuffle_function(mapped_values):
     shuffled = defaultdict(list)
@@ -24,9 +25,11 @@ def shuffle_function(mapped_values):
         shuffled[key].append(value)
     return shuffled.items()
 
+
 def reduce_function(key_values):
     key, values = key_values
     return key, sum(values)
+
 
 def map_reduce(text):
     words = text.split()
@@ -41,7 +44,8 @@ def map_reduce(text):
 
     return dict(reduced_values)
 
-def visualize_top_words(words_dict, n = 10):
+
+def visualize_top_words(words_dict, n=10):
     sorted_words = sorted(words_dict.items(), key=lambda x: x[1], reverse=True)[:n]
 
     words, frequencies = zip(*sorted_words)
@@ -57,8 +61,7 @@ def visualize_top_words(words_dict, n = 10):
     plt.show()
 
 
-if __name__ == '__main__':
-    # Вхідний текст для обробки
+if __name__ == "__main__":
     url = "https://gutenberg.net.au/ebooks03/0301261.txt"
     text = get_text(url)
     if text:
