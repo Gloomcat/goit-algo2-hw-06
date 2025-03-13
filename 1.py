@@ -1,3 +1,5 @@
+import string
+
 from concurrent.futures import ThreadPoolExecutor
 from collections import defaultdict
 
@@ -13,6 +15,10 @@ def get_text(url):
     except requests.RequestException as e:
         print(e)
         return None
+
+
+def remove_punctuation(text):
+    return text.translate(str.maketrans("", "", string.punctuation))
 
 
 def map_function(word):
@@ -32,6 +38,7 @@ def reduce_function(key_values):
 
 
 def map_reduce(text):
+    text = remove_punctuation(text)
     words = text.split()
 
     with ThreadPoolExecutor() as executor:
